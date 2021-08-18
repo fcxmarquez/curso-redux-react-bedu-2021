@@ -1,16 +1,9 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { connect } from "react-redux";
 import * as usersActions from "../../actions/usersActions"; /* El asterisco significa que importara todos las funciones de ese lugar y lo llamara como un objeto userActions */
 
 class Users extends Component {
   componentDidMount() {
-    /* const response = await axios.get(
-      "https://jsonplaceholder.typicode.com/users"
-    );
-    this.setState({
-      users: response.data,
-    }); */
     this.props.getAll();
   }
 

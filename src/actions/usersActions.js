@@ -1,6 +1,12 @@
-export const getAll = () => (dispatch) => { /* Una funcion que retorna otra funcion */
+import axios from "axios"
+
+export const getAll = () => async (dispatch) => { /* Una funcion que retorna otra funcion */
+  const response = await axios.get(
+    "https://jsonplaceholder.typicode.com/users"
+  );
+
   dispatch({
     type: "GET_USERS",
-    payload: [1,3,5]
+    payload: response.data
   })
 }
