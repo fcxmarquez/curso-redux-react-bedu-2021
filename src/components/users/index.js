@@ -17,7 +17,7 @@ class Users extends Component {
     ));
 
   render() {
-    console.log(this.props);
+    console.log(this.props.loading)
     return (
       <div>
         <table className="table">
