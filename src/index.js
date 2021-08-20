@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import "./assets/styles/index.css";
+import "./assets/styles/icons.css"
 import App from "./components/App";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";

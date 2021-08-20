@@ -1,36 +1,33 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as usersActions from "../../actions/usersActions"; /* El asterisco significa que importara todos las funciones de ese lugar y lo llamara como un objeto userActions */
+import Spinner from "../general/Spinner";
+import Fatal from "../general/Fatal";
+import Table from "./Table";
 
 class Users extends Component {
   componentDidMount() {
     this.props.getAll();
   }
 
-  putRows = () =>
-    this.props.users.map((item) => (
-      <tr key={item.id}>
-        <td>{item.name}</td>
-        <td>{item.email}</td>
-        <td>{item.website}</td>
-      </tr>
-    ));
+  putContent = () => {
+    if (this.props.loading) {
+      return <Spinner />;
+    }
+
+    if (this.props.error) {
+      return <Fatal msg={this.props.error} />;
+    }
+
+    return <Table />;
+  };
 
   render() {
-    console.log(this.props.loading)
     return (
-      <div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Correo</th>
-              <th>Enlace</th>
-            </tr>
-          </thead>
-          <tbody>{this.putRows()}</tbody>
-        </table>
-      </div>
+      <>
+        {" "}
+        <h1>Users</h1> {this.putContent()}{" "}
+      </>
     );
   }
 }

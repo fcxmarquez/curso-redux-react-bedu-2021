@@ -3,7 +3,7 @@ import { getUsers, loading, error } from "../actions/types/usersTypes";
 const INITIAL_STATE = {
   users: [],
   loading: false,
-  error: ""
+  error: "",
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -18,7 +18,7 @@ export default (state = INITIAL_STATE, action) => {
     }
 
     case error: {
-      return { ...state, error: action.payload };
+      return { ...state, error: action.payload, loading: false };
     }
 
     default:
