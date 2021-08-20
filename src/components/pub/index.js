@@ -3,10 +3,13 @@ import { connect } from "react-redux";
 import * as usersActions from "../../actions/usersActions";
 import * as publicationsActions from "../../actions/publicationsActions";
 
+const { getAll: usersGetAll } = usersActions;
+const { getAll: publicationsGetAll } = publicationsActions;
+
 class Publications extends Component {
   componentDidMount() {
     if (!this.props.usersReducer.users.length) {
-      this.props.getAll();
+      this.props.usersGetAll();
     } /* con esto evitamos volver a traer los props en caso de que ya existan porque provenimos de una pestaña donde ya los cargo */
   }
 
@@ -29,8 +32,8 @@ const mapStateToProps = ({ usersReducer, publicationsReducer }) => {
 };
 
 const mapDispatchToProps = {
-  ...usersActions,
-  ...publicationsActions,
+  usersGetAll,
+  publicationsGetAll,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Publications);
