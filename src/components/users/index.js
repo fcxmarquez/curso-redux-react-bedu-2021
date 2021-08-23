@@ -7,7 +7,9 @@ import Table from "./Table";
 
 class Users extends Component {
   componentDidMount() {
-    this.props.getAll();
+    if (!this.props.users.length) {
+      this.props.getAll();
+    }
   }
 
   putContent = () => {
@@ -25,8 +27,7 @@ class Users extends Component {
   render() {
     return (
       <>
-        {" "}
-        <h1>Users</h1> {this.putContent()}{" "}
+        <h1>Users</h1> {this.putContent()}
       </>
     );
   }

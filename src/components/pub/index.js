@@ -4,13 +4,15 @@ import * as usersActions from "../../actions/usersActions";
 import * as publicationsActions from "../../actions/publicationsActions";
 
 const { getAll: usersGetAll } = usersActions;
-const { getAll: publicationsGetAll } = publicationsActions;
+const { getUser: publicationsGetUser } = publicationsActions;
 
 class Publications extends Component {
-  componentDidMount() {
+  async componentDidMount() {
+    /* Lo hacemos asincrono para asegurarnos de que primero se ejecute traer todos los usuarios y despues sus publicaciones */
     if (!this.props.usersReducer.users.length) {
-      this.props.usersGetAll();
+      await this.props.usersGetAll();
     } /* con esto evitamos volver a traer los props en caso de que ya existan porque provenimos de una pestaña donde ya los cargo */
+    this.props.publicationsGetUser(this.props.match.params.key);
   }
 
   render() {
@@ -33,7 +35,7 @@ const mapStateToProps = ({ usersReducer, publicationsReducer }) => {
 
 const mapDispatchToProps = {
   usersGetAll,
-  publicationsGetAll,
+  publicationsGetUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Publications);

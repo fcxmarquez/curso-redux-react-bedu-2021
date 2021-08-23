@@ -1,22 +1,20 @@
 import axios from "axios";
-import { error, getPublications, loading } from "./types/publicationsTypes";
+import { error, getForUser, loading } from "./types/publicationsTypes";
 
-export const getAll = () => async (dispatch) => {
+export const getUser = (key) => async (dispatch, getState) => {
+  /* getState sirve par recibir el estado actual de tu store */
+  const { users } = getState().usersReducer;
+  const { publications } = getState().publicationsReducer;
+  const userId = users[key].id;
+
+  const response = await axios.get(
+    `http://jsonplaceholder.typicode.com/posts?userId=${userId}`
+  );
+
+  const actualPublications = [...publications, response.data];
+
   dispatch({
-    type: loading,
+    type: getForUser,
+    payload: actualPublications,
   });
-  try {
-    const response = await axios.get(
-      "http://jsonplaceholder.typicode.com/posts"
-    );
-    dispatch({
-      type: getPublications,
-      payload: response.data,
-    });
-  } catch (err) {
-    dispatch({
-      type: error,
-      payload: err.message,
-    });
-  }
 };

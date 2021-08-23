@@ -11,7 +11,7 @@ export default (state = INITIAL_STATE, action) => {
   /* Aqui de una vez le asignamos nuestro initial state */
   switch (action.type) {
     case getUsers:
-      return { ...state, users: action.payload, loading: false };
+      return { ...state, users: action.payload, loading: false, error: "" };
 
     case loading: {
       return { ...state, loading: true };
