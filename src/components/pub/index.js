@@ -9,10 +9,19 @@ const { getUser: publicationsGetUser } = publicationsActions;
 class Publications extends Component {
   async componentDidMount() {
     /* Lo hacemos asincrono para asegurarnos de que primero se ejecute traer todos los usuarios y despues sus publicaciones */
+    const {
+      usersGetAll,
+      publicationsGetUser,
+      match: {
+        params: { key },
+      },
+    } = this.props;
     if (!this.props.usersReducer.users.length) {
-      await this.props.usersGetAll();
+      await usersGetAll();
     } /* con esto evitamos volver a traer los props en caso de que ya existan porque provenimos de una pestaña donde ya los cargo */
-    this.props.publicationsGetUser(this.props.match.params.key);
+    if (!("keysPublications" in this.props.usersReducer.users[key])) {
+      publicationsGetUser(key);
+    } /* En caso de que no este esa informacion, la completamos, asi evitamos la sobrescritura */
   }
 
   render() {
