@@ -19,7 +19,13 @@ export const getUser = (key) => async (dispatch, getState) => {
       `http://jsonplaceholder.typicode.com/posts?userId=${userId}`
     );
 
-    const actualPublications = [...publications, response.data];
+    const news = response.data.map((publication) => ({
+      ...publication,
+      comments: [],
+      open: false,
+    }));
+
+    const actualPublications = [...publications, news];
 
     dispatch({
       type: getForUser,
@@ -44,4 +50,8 @@ export const getUser = (key) => async (dispatch, getState) => {
       payload: "Publications don't available",
     });
   }
+};
+
+export const openClose = (keyPublication, commentKey) => (dispatch) => {
+  console.log(keyPublication, commentKey);
 };

@@ -6,7 +6,7 @@ import Loading from "../general/Spinner";
 import Fatal from "../general/Fatal";
 
 const { getAll: usersGetAll } = usersActions;
-const { getUser: publicationsGetUser } = publicationsActions;
+const { getUser: publicationsGetUser, openClose } = publicationsActions;
 
 class Publications extends Component {
   async componentDidMount() {
@@ -75,13 +75,17 @@ class Publications extends Component {
     console.log(publications);
 
     const { keysPublications } = users[key];
-    return publications[keysPublications].map((item) => (
-      <div className="pub-title" key={item.id} onClick={() => alert(item.id)}>
+
+    return this.showInfo(publications[keysPublications], keysPublications);
+  };
+
+  showInfo = (publications, keyPublication) =>
+    publications.map((item, commentKey) => (
+      <div className="pub-title" key={item.id} onClick={() => this.props.openClose(keyPublication, commentKey)}>
         <h2>{item.title}</h2>
         <h3> {item.body} </h3>
       </div>
     ));
-  };
 
   render() {
     console.log(this.props);
@@ -104,6 +108,7 @@ const mapStateToProps = ({ usersReducer, publicationsReducer }) => {
 const mapDispatchToProps = {
   usersGetAll,
   publicationsGetUser,
+  openClose,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Publications);
