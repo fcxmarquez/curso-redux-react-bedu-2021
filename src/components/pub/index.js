@@ -50,12 +50,44 @@ class Publications extends Component {
     return <h1>Publicaciones de {name}</h1>;
   };
 
+  putPublications = () => {
+    const {
+      usersReducer,
+      usersReducer: { users },
+      publicationsReducer,
+      publicationsReducer: { publications },
+      match: {
+        params: { key },
+      },
+    } = this.props;
+
+    if (!users.length) return "";
+    if (usersReducer.error) return "";
+    if (publicationsReducer.loading) {
+      return <Loading />;
+    }
+    if (publicationsReducer.error) {
+      return <Fatal msg={publicationsReducer.error} />;
+    }
+    if (!publications.length) return; /* En caso que no haya publicaciones, no hagas nada, para esperar hasta que se cargen estos */
+    if (!("keysPublications" in users[key])) return;
+    console.log(publications);
+
+    const { keysPublications } = users[key];
+    return publications[keysPublications].map((item) => (
+      <div className="pub-title" >
+        <h2>{item.title}</h2>
+        <h3> {item.body} </h3>
+      </div>
+    ));
+  };
+
   render() {
     console.log(this.props);
     return (
       <div>
-        {this.props.match.params.key}
         {this.putUser()}
+        {this.putPublications()}
       </div>
     ); /* Como sabemos este match.params proviene de react-router y nos sirve para mostrar la direccion de url que coincida con la direccion key */
   }

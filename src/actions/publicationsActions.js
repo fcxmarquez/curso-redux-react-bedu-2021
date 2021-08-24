@@ -10,27 +10,40 @@ export const getUser = (key) => async (dispatch, getState) => {
   const { publications } = getState().publicationsReducer;
   const userId = users[key].id;
 
-  const response = await axios.get(
-    `http://jsonplaceholder.typicode.com/posts?userId=${userId}`
-  );
-
-  const actualPublications = [...publications, response.data];
-
-  /* Realizaremos la inmutabilidad */
-  const keysPublications = actualPublications.length - 1;
-  const actualUsers = [...users];
-  actualUsers[key] = {
-    ...users[key],
-    keysPublications,
-  };
-
   dispatch({
-    type: usersGetAll,
-    payload: actualUsers,
+    type: loading,
   });
 
-  dispatch({
-    type: getForUser,
-    payload: actualPublications,
-  });
+  try {
+    const response = await axios.get(
+      `http://jsonplaceholder.typicode.com/posts?userId=${userId}`
+    );
+  
+    const actualPublications = [...publications, response.data];
+  
+    /* Realizaremos la inmutabilidad */
+    const keysPublications = actualPublications.length - 1;
+    const actualUsers = [...users];
+    actualUsers[key] = {
+      ...users[key],
+      keysPublications,
+    };
+  
+    dispatch({
+      type: usersGetAll,
+      payload: actualUsers,
+    });
+  
+    dispatch({
+      type: getForUser,
+      payload: actualPublications,
+    });
+  } catch (err) {
+    dispatch({
+      type: error,
+      payload: err.message,
+    });
+  }
+
+ 
 };

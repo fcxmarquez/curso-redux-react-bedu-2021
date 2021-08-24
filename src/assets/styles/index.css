@@ -13,7 +13,7 @@
 }
 
 #menu {
-  background-color: #253A46;
+  background-color: #253a46;
   padding: 20px;
   font-size: 20px;
 }
@@ -23,10 +23,14 @@
   padding-right: 50px;
 }
 
-body{
+body {
   margin: 0;
 }
 
 .center {
   text-align: center;
+}
+
+.pub-title {
+  border-top: 1px solid black;
 }
