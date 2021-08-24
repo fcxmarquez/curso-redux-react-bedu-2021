@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as usersActions from "../../actions/usersActions";
 import * as publicationsActions from "../../actions/publicationsActions";
+import Loading from "../general/Spinner";
+import Fatal from "../general/Fatal";
 
 const { getAll: usersGetAll } = usersActions;
 const { getUser: publicationsGetUser } = publicationsActions;
@@ -16,20 +18,44 @@ class Publications extends Component {
         params: { key },
       },
     } = this.props;
+
     if (!this.props.usersReducer.users.length) {
       await usersGetAll();
     } /* con esto evitamos volver a traer los props en caso de que ya existan porque provenimos de una pestaña donde ya los cargo */
+    if (this.props.usersReducer.error) {
+      return;
+    }
     if (!("keysPublications" in this.props.usersReducer.users[key])) {
       publicationsGetUser(key);
     } /* En caso de que no este esa informacion, la completamos, asi evitamos la sobrescritura */
   }
 
+  putUser = () => {
+    const {
+      usersReducer,
+      match: {
+        params: { key },
+      },
+    } = this.props;
+
+    if (usersReducer.error) {
+      return <Fatal msg={usersReducer.error} />;
+    }
+
+    if (!usersReducer.users.length || usersReducer.loading) {
+      return <Loading />;
+    }
+
+    const name = usersReducer.users[key].name;
+    return <h1>Publicaciones de {name}</h1>;
+  };
+
   render() {
     console.log(this.props);
     return (
       <div>
-        <h1>Publicaciones de</h1>
         {this.props.match.params.key}
+        {this.putUser()}
       </div>
     ); /* Como sabemos este match.params proviene de react-router y nos sirve para mostrar la direccion de url que coincida con la direccion key */
   }
