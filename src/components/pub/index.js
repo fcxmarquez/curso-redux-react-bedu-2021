@@ -69,13 +69,14 @@ class Publications extends Component {
     if (publicationsReducer.error) {
       return <Fatal msg={publicationsReducer.error} />;
     }
-    if (!publications.length) return; /* En caso que no haya publicaciones, no hagas nada, para esperar hasta que se cargen estos */
+    if (!publications.length)
+      return; /* En caso que no haya publicaciones, no hagas nada, para esperar hasta que se cargen estos */
     if (!("keysPublications" in users[key])) return;
     console.log(publications);
 
     const { keysPublications } = users[key];
     return publications[keysPublications].map((item) => (
-      <div className="pub-title" >
+      <div className="pub-title" key={item.id} onClick={() => alert(item.id)}>
         <h2>{item.title}</h2>
         <h3> {item.body} </h3>
       </div>

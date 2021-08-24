@@ -18,9 +18,14 @@ export const getUser = (key) => async (dispatch, getState) => {
     const response = await axios.get(
       `http://jsonplaceholder.typicode.com/posts?userId=${userId}`
     );
-  
+
     const actualPublications = [...publications, response.data];
-  
+
+    dispatch({
+      type: getForUser,
+      payload: actualPublications,
+    });
+
     /* Realizaremos la inmutabilidad */
     const keysPublications = actualPublications.length - 1;
     const actualUsers = [...users];
@@ -28,22 +33,15 @@ export const getUser = (key) => async (dispatch, getState) => {
       ...users[key],
       keysPublications,
     };
-  
+
     dispatch({
       type: usersGetAll,
       payload: actualUsers,
     });
-  
-    dispatch({
-      type: getForUser,
-      payload: actualPublications,
-    });
   } catch (err) {
     dispatch({
       type: error,
-      payload: err.message,
+      payload: "Publications don't available",
     });
   }
-
- 
 };
