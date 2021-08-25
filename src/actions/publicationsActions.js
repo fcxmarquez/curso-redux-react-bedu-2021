@@ -65,7 +65,9 @@ export const openClose =
 
     /* Realizaremos la inmutabilidad */
     const actualizedPublications = [...publications];
-    actualizedPublications[keyPublication] = [...publications[keyPublication]]; /* Esta linea al parecer esta de mas */
+    actualizedPublications[keyPublication] = [
+      ...publications[keyPublication],
+    ]; /* Esta linea al parecer esta de mas */
     actualizedPublications[keyPublication][commentKey] = actualized;
 
     dispatch({
@@ -73,3 +75,6 @@ export const openClose =
       payload: actualizedPublications,
     });
   };
+
+export const getComments =
+  (keyPublication, commentKey) => (dispatch, getState) => {};
