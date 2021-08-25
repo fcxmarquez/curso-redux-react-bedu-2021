@@ -89,12 +89,12 @@ class Publications extends Component {
         className="pub-title"
         key={item.id}
         onClick={() =>
-          this.showComments(keyPublication, commentKey, publications.comments)
+          this.showComments(keyPublication, commentKey, item.comments)
         }
       >
         <h2>{item.title}</h2>
         <h3> {item.body} </h3>
-        {item.open ? <Comments /> : ""}
+        {item.open ? <Comments comments={item.comments} /> : ""}
       </div>
     ));
 

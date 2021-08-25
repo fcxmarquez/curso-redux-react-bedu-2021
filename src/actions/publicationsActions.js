@@ -1,5 +1,11 @@
 import axios from "axios";
-import { error, update, loading } from "./types/publicationsTypes";
+import {
+  error,
+  update,
+  loading,
+  commentError,
+  commentLoading,
+} from "./types/publicationsTypes";
 import * as usersTypes from "./types/usersTypes";
 
 const { getUsers: usersGetAll } = usersTypes;
@@ -80,24 +86,35 @@ export const getComments =
     const { publications } = getState().publicationsReducer;
     const selected = publications[keyPublication][commentKey];
 
-    const response = await axios.get(
-      `https://jsonplaceholder.typicode.com/comments?postId=${selected.id}`
-    );
-
-    const actualized = {
-      ...selected,
-      comments: response.data,
-    };
-
-    /* Realizaremos la inmutabilidad */
-    const actualizedPublications = [...publications];
-    actualizedPublications[keyPublication] = [
-      ...publications[keyPublication],
-    ]; /* Esta linea al parecer esta de mas */
-    actualizedPublications[keyPublication][commentKey] = actualized;
-
     dispatch({
-      type: update,
-      payload: actualizedPublications,
+      type: commentLoading,
     });
+
+    try {
+      const response = await axios.get(
+        `https://jsonplaceholder.typicode.com/comments?postId=${selected.id}`
+      );
+
+      const actualized = {
+        ...selected,
+        comments: response.data,
+      };
+
+      /* Realizaremos la inmutabilidad */
+      const actualizedPublications = [...publications];
+      actualizedPublications[keyPublication] = [
+        ...publications[keyPublication],
+      ]; /* Esta linea al parecer esta de mas */
+      actualizedPublications[keyPublication][commentKey] = actualized;
+
+      dispatch({
+        type: update,
+        payload: actualizedPublications,
+      });
+    } catch (err) {
+      dispatch({
+        type: commentError,
+        payload: "Comments don't available",
+      });
+    }
   };
