@@ -4,15 +4,14 @@ import Fatal from "../general/Fatal";
 import { connect } from "react-redux";
 
 const Comments = (props) => {
-  if (props.loading) {
+  if (props.Loading) {
     return <Spinner />;
   }
 
-  if (props.error) {
+  if (props.Error) {
     return <Fatal />;
   }
 
-  console.log(props);
   const putComments = () => {
     props.comments.map((item) => (
       <li>
@@ -22,10 +21,22 @@ const Comments = (props) => {
         <br />
         {item.body}
       </li>
-    ));
+    )); /* Esta funcion no pude ejecutarla directamente en el return */
   };
 
-  return <ul>{putComments()}</ul>;
+  return (
+    <ul>
+      {props.comments.map((item) => (
+        <li>
+          <b>
+            <u>{item.email}</u>
+          </b>
+          <br />
+          {item.body}
+        </li>
+      ))}
+    </ul>
+  );
 };
 
 const mapStateToProps = ({ publicationsReducer }) => publicationsReducer;
