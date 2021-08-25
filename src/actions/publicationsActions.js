@@ -1,5 +1,5 @@
 import axios from "axios";
-import { error, getForUser, loading } from "./types/publicationsTypes";
+import { error, update, loading } from "./types/publicationsTypes";
 import * as usersTypes from "./types/usersTypes";
 
 const { getUsers: usersGetAll } = usersTypes;
@@ -28,7 +28,7 @@ export const getUser = (key) => async (dispatch, getState) => {
     const actualPublications = [...publications, news];
 
     dispatch({
-      type: getForUser,
+      type: update,
       payload: actualPublications,
     });
 
@@ -52,6 +52,24 @@ export const getUser = (key) => async (dispatch, getState) => {
   }
 };
 
-export const openClose = (keyPublication, commentKey) => (dispatch) => {
-  console.log(keyPublication, commentKey);
-};
+export const openClose =
+  (keyPublication, commentKey) => (dispatch, getState) => {
+    const { publications } = getState().publicationsReducer;
+    console.log(keyPublication, commentKey);
+    const selected = publications[keyPublication][commentKey];
+
+    const actualized = {
+      ...selected,
+      open: !selected.open,
+    };
+
+    /* Realizaremos la inmutabilidad */
+    const actualizedPublications = [...publications];
+    actualizedPublications[keyPublication] = [...publications[keyPublication]]; /* Esta linea al parecer esta de mas */
+    actualizedPublications[keyPublication][commentKey] = actualized;
+
+    dispatch({
+      type: update,
+      payload: actualizedPublications,
+    });
+  };

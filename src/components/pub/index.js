@@ -72,7 +72,6 @@ class Publications extends Component {
     if (!publications.length)
       return; /* En caso que no haya publicaciones, no hagas nada, para esperar hasta que se cargen estos */
     if (!("keysPublications" in users[key])) return;
-    console.log(publications);
 
     const { keysPublications } = users[key];
 
@@ -81,9 +80,14 @@ class Publications extends Component {
 
   showInfo = (publications, keyPublication) =>
     publications.map((item, commentKey) => (
-      <div className="pub-title" key={item.id} onClick={() => this.props.openClose(keyPublication, commentKey)}>
+      <div
+        className="pub-title"
+        key={item.id}
+        onClick={() => this.props.openClose(keyPublication, commentKey)}
+      >
         <h2>{item.title}</h2>
         <h3> {item.body} </h3>
+        {item.open ? "open" : "cerrado"}
       </div>
     ));
 

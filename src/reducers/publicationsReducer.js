@@ -1,5 +1,5 @@
 import {
-  getForUser,
+  update,
   loading,
   error,
 } from "../actions/types/publicationsTypes";
@@ -14,7 +14,7 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   /* Aqui de una vez le asignamos nuestro initial state */
   switch (action.type) {
-    case getForUser:
+    case update:
       return { ...state, publications: action.payload, loading: false, error: "" };
 
     case loading: {
