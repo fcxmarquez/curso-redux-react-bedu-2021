@@ -55,7 +55,6 @@ export const getUser = (key) => async (dispatch, getState) => {
 export const openClose =
   (keyPublication, commentKey) => (dispatch, getState) => {
     const { publications } = getState().publicationsReducer;
-    console.log(keyPublication, commentKey);
     const selected = publications[keyPublication][commentKey];
 
     const actualized = {
@@ -77,4 +76,28 @@ export const openClose =
   };
 
 export const getComments =
-  (keyPublication, commentKey) => (dispatch, getState) => {};
+  (keyPublication, commentKey) => async (dispatch, getState) => {
+    const { publications } = getState().publicationsReducer;
+    const selected = publications[keyPublication][commentKey];
+
+    const response = await axios.get(
+      `https://jsonplaceholder.typicode.com/comments?postId=${selected.id}`
+    );
+
+    const actualized = {
+      ...selected,
+      comments: response.data,
+    };
+
+    /* Realizaremos la inmutabilidad */
+    const actualizedPublications = [...publications];
+    actualizedPublications[keyPublication] = [
+      ...publications[keyPublication],
+    ]; /* Esta linea al parecer esta de mas */
+    actualizedPublications[keyPublication][commentKey] = actualized;
+
+    dispatch({
+      type: update,
+      payload: actualizedPublications,
+    });
+  };
