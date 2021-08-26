@@ -4,8 +4,7 @@ import Menu from "./Menu";
 import Users from "./users";
 import Layout from "./Layout";
 import Publications from "./pub";
-
-const Tasks = () => <div>404</div>;
+import Tasks from "./tasks"
 
 const App = () => (
   <BrowserRouter>
