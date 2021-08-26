@@ -4,12 +4,12 @@ import Fatal from "../general/Fatal";
 import { connect } from "react-redux";
 
 const Comments = (props) => {
-  if (props.Loading) {
-    return <Spinner />;
+  if (props.commentError) {
+    return <Fatal msg={props.commentError} />;
   }
 
-  if (props.Error) {
-    return <Fatal />;
+  if (props.commentLoading && !props.comments.length) {
+    return <Spinner />;
   }
 
   const putComments = () => {
@@ -27,7 +27,7 @@ const Comments = (props) => {
   return (
     <ul>
       {props.comments.map((item) => (
-        <li>
+        <li key={item.id}>
           <b>
             <u>{item.email}</u>
           </b>

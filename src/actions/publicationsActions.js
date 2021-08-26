@@ -5,6 +5,7 @@ import {
   loading,
   commentError,
   commentLoading,
+  commentUpdate,
 } from "./types/publicationsTypes";
 import * as usersTypes from "./types/usersTypes";
 
@@ -108,7 +109,7 @@ export const getComments =
       actualizedPublications[keyPublication][commentKey] = actualized;
 
       dispatch({
-        type: update,
+        type: commentUpdate,
         payload: actualizedPublications,
       });
     } catch (err) {

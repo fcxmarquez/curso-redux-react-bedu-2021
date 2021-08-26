@@ -1,4 +1,4 @@
-import { update, loading, error, commentLoading, commentError } from "../actions/types/publicationsTypes";
+import { update, loading, error, commentLoading, commentError, commentUpdate } from "../actions/types/publicationsTypes";
 
 const INITIAL_STATE = {
   publications: [],
@@ -27,6 +27,14 @@ export default (state = INITIAL_STATE, action) => {
     case error: {
       return { ...state, error: action.payload, loading: false };
     }
+
+    case commentUpdate:
+      return {
+        ...state,
+        publications: action.payload,
+        commentLoading: false,
+        commentError: "",
+      };
 
     case commentLoading: {
       return { ...state, commentLoading: true };
