@@ -1,5 +1,11 @@
 import axios from "axios";
-import { getTasks, loading, error } from "./types/tasksTypes";
+import {
+  getTasks,
+  loading,
+  error,
+  setChangeUserId,
+  setChangeTitle,
+} from "./types/tasksTypes";
 
 export const getAll = () => async (dispatch) => {
   /* Una funcion que retorna otra funcion */
@@ -30,4 +36,18 @@ export const getAll = () => async (dispatch) => {
       payload: "Tasks information don't available",
     });
   }
+};
+
+export const changeUserId = (payload) => (dispatch) => {
+  dispatch({
+    type: setChangeUserId,
+    payload: payload,
+  });
+};
+
+export const changeUserTitle = (payload) => (dispatch) => {
+  dispatch({
+    type: setChangeTitle,
+    payload: payload,
+  });
 };

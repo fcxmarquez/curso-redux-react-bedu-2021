@@ -1,9 +1,17 @@
-import { getTasks, loading, error } from "../actions/types/tasksTypes";
+import {
+  getTasks,
+  loading,
+  error,
+  setChangeUserId,
+  setChangeTitle,
+} from "../actions/types/tasksTypes";
 
 const INITIAL_STATE = {
   tasks: {},
   loading: false,
   error: "",
+  userId: "",
+  title: "",
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -19,6 +27,14 @@ export default (state = INITIAL_STATE, action) => {
 
     case error: {
       return { ...state, error: action.payload, loading: false };
+    }
+
+    case setChangeUserId: {
+      return { ...state, userId: action.payload };
+    }
+
+    case setChangeTitle: {
+      return { ...state, title: action.payload };
     }
 
     default:
