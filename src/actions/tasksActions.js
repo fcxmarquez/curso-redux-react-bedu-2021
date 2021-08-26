@@ -10,9 +10,19 @@ export const getAll = () => async (dispatch) => {
     const response = await axios.get(
       "https://jsonplaceholder.typicode.com/todos"
     );
+
+    const tasks = {};
+    response.data.map(
+      (item) =>
+        (tasks[item.userId] = {
+          ...tasks[item.userId],
+          [item.id]: { ...item },
+        })
+    ); /* Con esto normalizamos los datos, mapeamos de un arreglo a un objeto de objetos, de paso ya hicimos la inmutablididad */
+
     dispatch({
       type: getTasks,
-      payload: response.data,
+      payload: tasks,
     });
   } catch (err) {
     dispatch({
