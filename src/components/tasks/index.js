@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import * as tasksActions from "../../actions/tasksActions";
 import Spinner from "../general/Spinner";
 import Fatal from "../general/Fatal";
@@ -33,18 +34,19 @@ class Tasks extends React.Component {
 
     return Object.keys(forUser).map((item) => (
       <div key={item}>
-        <input
-          type="checkbox"
-          defaultChecked={forUser[item].completed}
-        />
+        <input type="checkbox" defaultChecked={forUser[item].completed} />
         {forUser[item].title}
       </div>
     ));
   };
 
   render() {
-    console.log(this.props);
-    return <div>{this.showInfo()}</div>;
+    return (
+      <div>
+        <button><Link to={"/tasks/save"}>Add</Link></button>
+        {this.showInfo()}
+      </div>
+    );
   }
 }
 
