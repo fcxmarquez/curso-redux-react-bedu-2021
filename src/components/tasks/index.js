@@ -6,7 +6,7 @@ import Spinner from "../general/Spinner";
 import Fatal from "../general/Fatal";
 class Tasks extends React.Component {
   componentDidMount() {
-    if(!Object.keys(this.props.tasks).lenght){
+    if (!Object.keys(this.props.tasks).lenght) {
       this.props.getAll();
     }
   }
@@ -38,15 +38,19 @@ class Tasks extends React.Component {
       <div key={item}>
         <input type="checkbox" defaultChecked={forUser[item].completed} />
         {forUser[item].title}
+        <button className="m-left"><Link to={`/tasks/save/${userId}`}>Edit</Link></button>
+        <button className="m-left">Remove</button>
       </div>
     ));
   };
 
   render() {
-    console.log(this.props)
+    console.log(this.props);
     return (
       <div>
-        <button><Link to={"/tasks/save"}>Add</Link></button>
+        <button>
+          <Link to={"/tasks/save"}>Add</Link>
+        </button>
         {this.showInfo()}
       </div>
     );
