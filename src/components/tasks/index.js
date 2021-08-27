@@ -6,7 +6,9 @@ import Spinner from "../general/Spinner";
 import Fatal from "../general/Fatal";
 class Tasks extends React.Component {
   componentDidMount() {
-    this.props.getAll();
+    if(!Object.keys(this.props.tasks).lenght){
+      this.props.getAll();
+    }
   }
 
   showInfo = () => {
@@ -41,6 +43,7 @@ class Tasks extends React.Component {
   };
 
   render() {
+    console.log(this.props)
     return (
       <div>
         <button><Link to={"/tasks/save"}>Add</Link></button>

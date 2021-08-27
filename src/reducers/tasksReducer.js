@@ -4,6 +4,7 @@ import {
   error,
   setChangeUserId,
   setChangeTitle,
+  added,
 } from "../actions/types/tasksTypes";
 
 const INITIAL_STATE = {
@@ -35,6 +36,10 @@ export default (state = INITIAL_STATE, action) => {
 
     case setChangeTitle: {
       return { ...state, title: action.payload };
+    }
+
+    case added: {
+      return { ...state, tasks: {}, loading: false, error: "" };
     }
 
     default:

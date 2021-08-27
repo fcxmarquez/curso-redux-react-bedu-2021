@@ -5,6 +5,7 @@ import {
   error,
   setChangeUserId,
   setChangeTitle,
+  added,
 } from "./types/tasksTypes";
 
 export const getAll = () => async (dispatch) => {
@@ -50,4 +51,33 @@ export const changeUserTitle = (payload) => (dispatch) => {
     type: setChangeTitle,
     payload: payload,
   });
+};
+
+export const newTask = (newTask) => async (dispatch) => {
+  dispatch({
+    type: loading,
+  });
+
+  try {
+    const response = await fetch(
+      "https://jsonplaceholder.typicode.com/todoss",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newTask),
+      }
+    ).then((response) => response.json());
+
+    console.log(response);
+    dispatch({
+      type: added,
+    });
+  } catch (err) {
+    dispatch({
+      type: error,
+      payload: "error",
+    });
+  }
 };
