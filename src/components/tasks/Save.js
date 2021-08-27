@@ -18,8 +18,9 @@ class Save extends React.Component {
 
     if (userId && taskId) {
       const task = tasks[userId][taskId];
-      changeUserId(task.taskId);
-      changeUserTitle(tasks.title);
+      console.log("El task es:", task)
+      changeUserId(task.userId);
+      changeUserTitle(task.title);
     }
   }
 
