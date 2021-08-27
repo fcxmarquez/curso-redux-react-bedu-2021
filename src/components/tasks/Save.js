@@ -6,6 +6,23 @@ import Fatal from "../general/Fatal";
 import { Redirect } from "react-router";
 
 class Save extends React.Component {
+  componentDidMount() {
+    const {
+      match: {
+        params: { userId, taskId },
+      },
+      tasks,
+      changeUserId,
+      changeUserTitle,
+    } = this.props;
+
+    if (userId && taskId) {
+      const task = tasks[userId][taskId];
+      changeUserId(task.taskId);
+      changeUserTitle(tasks.title);
+    }
+  }
+
   handleUserId = (e) => {
     this.props.changeUserId(e.target.value);
   };

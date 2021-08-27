@@ -38,7 +38,7 @@ class Tasks extends React.Component {
       <div key={item}>
         <input type="checkbox" defaultChecked={forUser[item].completed} />
         {forUser[item].title}
-        <button className="m-left"><Link to={`/tasks/save/${userId}`}>Edit</Link></button>
+        <button className="m-left"><Link to={`/tasks/save/${userId}/${item}`}>Edit</Link></button>
         <button className="m-left">Remove</button>
       </div>
     ));
