@@ -13,6 +13,7 @@ const INITIAL_STATE = {
   error: "",
   userId: "",
   title: "",
+  return: false,
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -20,7 +21,13 @@ export default (state = INITIAL_STATE, action) => {
   /* Aqui de una vez le asignamos nuestro initial state */
   switch (action.type) {
     case getTasks:
-      return { ...state, tasks: action.payload, loading: false, error: "" };
+      return {
+        ...state,
+        tasks: action.payload,
+        loading: false,
+        error: "",
+        return: false,
+      };
 
     case loading: {
       return { ...state, loading: true };
@@ -39,7 +46,15 @@ export default (state = INITIAL_STATE, action) => {
     }
 
     case added: {
-      return { ...state, tasks: {}, loading: false, error: "" };
+      return {
+        ...state,
+        tasks: {},
+        loading: false,
+        error: "",
+        return: true,
+        userId: "",
+        title: "",
+      };
     }
 
     default:

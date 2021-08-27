@@ -59,16 +59,13 @@ export const newTask = (newTask) => async (dispatch) => {
   });
 
   try {
-    const response = await fetch(
-      "https://jsonplaceholder.typicode.com/todoss",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newTask),
-      }
-    ).then((response) => response.json());
+    const response = await fetch("https://jsonplaceholder.typicode.com/todos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newTask),
+    }).then((response) => response.json());
 
     console.log(response);
     dispatch({

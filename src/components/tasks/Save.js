@@ -53,6 +53,7 @@ class Save extends React.Component {
     console.log(this.props);
     return (
       <div>
+        {this.props.return && <Redirect to="/tasks" />}
         <h1>Save Task</h1>
         User id:
         <input
