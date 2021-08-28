@@ -9,16 +9,15 @@ class Save extends React.Component {
   componentDidMount() {
     const {
       match: {
-        params: { userId, taskId },
+        params: { userParamsId, taskParamsId },
       },
       tasks,
       changeUserId,
       changeUserTitle,
     } = this.props;
 
-    if (userId && taskId) {
-      const task = tasks[userId][taskId];
-      console.log("El task es:", task)
+    if (userParamsId && taskParamsId) {
+      const task = tasks[userParamsId][taskParamsId];
       changeUserId(task.userId);
       changeUserTitle(task.title);
     }
@@ -33,13 +32,35 @@ class Save extends React.Component {
   };
 
   handleSave = () => {
-    const { userId, title } = this.props;
+    const {
+      match: {
+        params: { userParamsId, taskParamsId },
+      },
+      userId,
+      title,
+      addTask,
+      editTask,
+      tasks,
+    } = this.props;
+
     const newTask = {
       userId: userId,
       title: title,
       completed: false,
     };
-    this.props.newTask(newTask);
+
+    if (userParamsId && taskParamsId) {
+      const task = tasks[userParamsId][taskParamsId];
+      const editedTask = {
+        ...newTask,
+        completed: task.completed,
+        id: task.id,
+      };
+      editTask(editedTask);
+    } else {
+      addTask(newTask);
+    }
+
   };
 
   handleDisabled = () => {
@@ -68,7 +89,6 @@ class Save extends React.Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <div>
         {this.props.return && <Redirect to="/tasks" />}

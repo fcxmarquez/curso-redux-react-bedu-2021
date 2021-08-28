@@ -53,7 +53,7 @@ export const changeUserTitle = (payload) => (dispatch) => {
   });
 };
 
-export const newTask = (newTask) => async (dispatch) => {
+export const addTask = (newTask) => async (dispatch) => {
   dispatch({
     type: loading,
   });
@@ -77,4 +77,8 @@ export const newTask = (newTask) => async (dispatch) => {
       payload: "error",
     });
   }
+};
+
+export const editTask = (payload) => (dispatch) => {
+  console.log(payload);
 };
