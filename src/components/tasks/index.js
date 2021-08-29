@@ -6,22 +6,23 @@ import Spinner from "../general/Spinner";
 import Fatal from "../general/Fatal";
 class Tasks extends React.Component {
   componentDidMount() {
-    if (!Object.keys(this.props.tasks).lenght) {
+    if (!Object.keys(this.props.tasks).length) {
       this.props.getAll();
     }
   }
 
   showInfo = () => {
     const { tasks, loading, error } = this.props;
-
-    if (loading) {
-      return <Spinner />;
-    }
-
+    console.log("Me ejecuto");
+    
     if (error) {
       return <Fatal msg={error} />;
     }
-
+    
+    if (loading) {
+      return <Spinner />;
+    }
+    
     return Object.keys(tasks).map((item) => (
       <div key={item}>
         <h2>Usuario {item}</h2>
