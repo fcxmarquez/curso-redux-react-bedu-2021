@@ -7,22 +7,21 @@ import Fatal from "../general/Fatal";
 class Tasks extends React.Component {
   componentDidMount() {
     if (!Object.keys(this.props.tasks).length) {
-      this.props.getAll();
+      this.props.getStateTasks();
     }
   }
 
   showInfo = () => {
     const { tasks, loading, error } = this.props;
-    console.log("Me ejecuto");
-    
-    if (error) {
-      return <Fatal msg={error} />;
-    }
-    
+
     if (loading) {
       return <Spinner />;
     }
-    
+
+    if (error) {
+      return <Fatal msg={error} />;
+    }
+
     return Object.keys(tasks).map((item) => (
       <div key={item}>
         <h2>Usuario {item}</h2>
@@ -52,7 +51,7 @@ class Tasks extends React.Component {
   };
 
   render() {
-    console.log(this.props)
+    console.log(this.props);
     return (
       <div>
         <button>

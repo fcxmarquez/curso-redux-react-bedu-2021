@@ -9,7 +9,7 @@ import {
   putTask,
 } from "./types/tasksTypes";
 
-export const getAll = () => async (dispatch) => {
+export const getStateTasks = () => async (dispatch) => {
   /* Una funcion que retorna otra funcion */
   dispatch({
     type: loading,
@@ -27,7 +27,6 @@ export const getAll = () => async (dispatch) => {
           [item.id]: { ...item },
         })
     ); /* Con esto normalizamos los datos, mapeamos de un arreglo a un objeto de objetos, de paso ya hicimos la inmutablididad */
-    console.log(tasks);
     dispatch({
       type: getTasks,
       payload: tasks,

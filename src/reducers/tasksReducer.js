@@ -32,6 +32,7 @@ export default (state = INITIAL_STATE, action) => {
       };
 
     case loading: {
+      console.log("Me ejectuo")
       return { ...state, loading: true };
     }
 
