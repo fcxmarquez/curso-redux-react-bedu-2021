@@ -123,3 +123,22 @@ export const changeCheck = (userId, taskId) => (dispatch, getState) => {
     payload: actualized,
   });
 };
+
+export const remove = (taskId) => async (dispatch) => {
+  dispatch({
+    type: loading,
+  });
+
+  try {
+    const response = await axios.delete(
+      `https://jsonplaceholder.typicode.com/todos/${taskId}`
+    );
+    console.log(response);
+    dispatch({
+      type: getTasks,
+      payload: {},
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};

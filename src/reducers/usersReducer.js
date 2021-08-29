@@ -14,7 +14,6 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, users: action.payload, loading: false, error: "" };
 
     case loading: {
-      console.log("Me ejectuo")
       return { ...state, loading: true };
     }
 

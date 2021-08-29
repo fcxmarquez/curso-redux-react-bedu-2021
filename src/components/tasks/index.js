@@ -11,6 +11,12 @@ class Tasks extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    if (!Object.keys(this.props.tasks).length) {
+      this.props.getStateTasks();
+    }
+  } /* Este ciclo permite volver a traer los mismos elementos en caso de que se actualice algun tipo de informacion */
+
   showInfo = () => {
     const { tasks, loading, error } = this.props;
 
@@ -31,7 +37,7 @@ class Tasks extends React.Component {
   };
 
   putTasks = (userId) => {
-    const { tasks, changeCheck } = this.props;
+    const { tasks, changeCheck, remove } = this.props;
     const forUser = { ...tasks[userId] };
 
     return Object.keys(forUser).map((item) => (
@@ -45,13 +51,15 @@ class Tasks extends React.Component {
         <button className="m-left">
           <Link to={`/tasks/save/${userId}/${item}`}>Edit</Link>
         </button>
-        <button className="m-left">Remove</button>
+        <button className="m-left" onClick={() => remove(item)}>
+          Remove
+        </button>
       </div>
     ));
   };
 
   render() {
-    console.log(this.props);
+    console.log(this.props.tasks);
     return (
       <div>
         <button>
