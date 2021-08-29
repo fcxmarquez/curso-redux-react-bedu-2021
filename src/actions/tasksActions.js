@@ -5,7 +5,8 @@ import {
   error,
   setChangeUserId,
   setChangeTitle,
-  added,
+  saved,
+  putTask
 } from "./types/tasksTypes";
 
 export const getAll = () => async (dispatch) => {
@@ -69,7 +70,7 @@ export const addTask = (newTask) => async (dispatch) => {
 
     console.log(response);
     dispatch({
-      type: added,
+      type: saved,
     });
   } catch (err) {
     dispatch({
@@ -79,6 +80,46 @@ export const addTask = (newTask) => async (dispatch) => {
   }
 };
 
-export const editTask = (payload) => (dispatch) => {
-  console.log(payload);
+export const editTask = (editTask) => async (dispatch) => {
+  dispatch({
+    type: loading,
+  });
+
+  try {
+    const response = await axios.put(
+      `https://jsonplaceholder.typicode.com/todos/${editTask.id}`,
+      editTask
+    );
+
+    console.log(response);
+    dispatch({
+      type: saved,
+    });
+  } catch (err) {
+    dispatch({
+      type: error,
+      payload: "error",
+    });
+  }
+};
+
+export const changeCheck = (userId, taskId) => (dispatch, getState) => {
+  const { tasks } = getState().tasksReducer;
+  const selected = tasks[userId][taskId];
+
+  const actualized = {
+    ...tasks,
+  };
+  actualized[userId] = {
+    ...tasks[userId],
+  };
+  actualized[userId][taskId] = {
+    ...tasks[userId][taskId],
+    completed: !selected.completed,
+  };
+
+  dispatch({
+    type: putTask,
+    payload: actualized
+  })
 };

@@ -31,20 +31,27 @@ class Tasks extends React.Component {
   };
 
   putTasks = (userId) => {
-    const { tasks } = this.props;
+    const { tasks, changeCheck } = this.props;
     const forUser = { ...tasks[userId] };
 
     return Object.keys(forUser).map((item) => (
       <div key={item}>
-        <input type="checkbox" defaultChecked={forUser[item].completed} />
+        <input
+          type="checkbox"
+          defaultChecked={forUser[item].completed}
+          onChange={() => changeCheck(userId, item)}
+        />
         {forUser[item].title}
-        <button className="m-left"><Link to={`/tasks/save/${userId}/${item}`}>Edit</Link></button>
+        <button className="m-left">
+          <Link to={`/tasks/save/${userId}/${item}`}>Edit</Link>
+        </button>
         <button className="m-left">Remove</button>
       </div>
     ));
   };
 
   render() {
+    console.log(this.props)
     return (
       <div>
         <button>
