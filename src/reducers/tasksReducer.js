@@ -6,6 +6,7 @@ import {
   setChangeTitle,
   saved,
   putTask,
+  setCleanForm,
 } from "../actions/types/tasksTypes";
 
 const INITIAL_STATE = {
@@ -21,7 +22,6 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   /* Aqui de una vez le asignamos nuestro initial state */
   switch (action.type) {
-    
     case getTasks:
       return {
         ...state,
@@ -63,6 +63,14 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         tasks: action.payload,
+      };
+    }
+
+    case setCleanForm: {
+      return {
+        ...state,
+        userId: "",
+        title: "",
       };
     }
 

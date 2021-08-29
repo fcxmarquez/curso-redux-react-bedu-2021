@@ -33,7 +33,6 @@ class Publications extends Component {
     if (!("keysPublications" in this.props.usersReducer.users[key])) {
       publicationsGetUser(key);
     } /* En caso de que no este esa informacion, la completamos, asi evitamos la sobrescritura */
-    console.log(this.props);
   }
 
   putUser = () => {

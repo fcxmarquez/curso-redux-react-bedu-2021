@@ -7,6 +7,7 @@ import {
   setChangeTitle,
   saved,
   putTask,
+  setCleanForm,
 } from "./types/tasksTypes";
 
 export const getStateTasks = () => async (dispatch) => {
@@ -67,7 +68,6 @@ export const addTask = (newTask) => async (dispatch) => {
       body: JSON.stringify(newTask),
     }).then((response) => response.json());
 
-    console.log(response);
     dispatch({
       type: saved,
     });
@@ -90,7 +90,6 @@ export const editTask = (editTask) => async (dispatch) => {
       editTask
     );
 
-    console.log(response);
     dispatch({
       type: saved,
     });
@@ -116,7 +115,6 @@ export const changeCheck = (userId, taskId) => (dispatch, getState) => {
     ...tasks[userId][taskId],
     completed: !selected.completed,
   };
-  console.log(actualized);
 
   dispatch({
     type: putTask,
@@ -133,7 +131,6 @@ export const remove = (taskId) => async (dispatch) => {
     const response = await axios.delete(
       `https://jsonplaceholder.typicode.com/todos/${taskId}`
     );
-    console.log(response);
     dispatch({
       type: getTasks,
       payload: {},
@@ -142,3 +139,9 @@ export const remove = (taskId) => async (dispatch) => {
     console.log(err);
   }
 };
+
+export const cleanForm = () => (dispatch) => {
+  dispatch({
+    type: setCleanForm
+  })
+}

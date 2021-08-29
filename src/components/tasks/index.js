@@ -12,8 +12,10 @@ class Tasks extends React.Component {
   }
 
   componentDidUpdate() {
-    if (!Object.keys(this.props.tasks).length) {
-      this.props.getStateTasks();
+    const {tasks, loading, getStateTasks} = this.props
+
+    if (!Object.keys(tasks).length && !loading) {
+      getStateTasks();
     }
   } /* Este ciclo permite volver a traer los mismos elementos en caso de que se actualice algun tipo de informacion */
 
@@ -59,7 +61,6 @@ class Tasks extends React.Component {
   };
 
   render() {
-    console.log(this.props.tasks);
     return (
       <div>
         <button>

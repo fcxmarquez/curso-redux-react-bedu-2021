@@ -14,12 +14,15 @@ class Save extends React.Component {
       tasks,
       changeUserId,
       changeUserTitle,
+      cleanForm
     } = this.props;
 
     if (userParamsId && taskParamsId) {
       const task = tasks[userParamsId][taskParamsId];
       changeUserId(task.userId);
       changeUserTitle(task.title);
+    }else {
+      cleanForm();
     }
   }
 
@@ -89,7 +92,6 @@ class Save extends React.Component {
   };
 
   render() {
-    console.log(this.props)
     return (
       <div>
         {this.props.return && <Redirect to="/tasks" />}
